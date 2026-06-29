@@ -1,0 +1,30 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    match /food/{foodId} {
+      allow read: if true;
+      allow write: if signedIn();
+    }
+
+    match /cart/{cartId} {
+      allow read, write: if signedIn();
+    }
+
+    match /orders/{orderId} {
+      allow read, write: if signedIn();
+    }
+
+    match /paymentIssues/{issueId} {
+      allow read, write: if signedIn();
+    }
+
+    match /deliveryAgents/{agentId} {
+      allow read, write: if signedIn();
+    }
+  }
+}

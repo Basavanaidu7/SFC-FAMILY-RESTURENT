@@ -1,0 +1,46 @@
+type User @table {
+  displayName: String!
+  createdAt: Timestamp!
+  email: String
+  photoUrl: String
+  bio: String
+}
+
+type Restaurant @table {
+  name: String!
+  address: String!
+  cuisineType: String!
+  createdAt: Timestamp!
+  phoneNumber: String
+  website: String
+  averageRating: Float
+}
+
+type Review @table {
+  user: User!
+  restaurant: Restaurant!
+  rating: Int!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  isPublic: Boolean!
+  comment: String
+  photos: [String]
+  dishName: String
+}
+
+type MealPlan @table {
+  user: User!
+  name: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  isPublic: Boolean!
+  description: String
+}
+
+type MealPlanItem @table(key: ["mealPlan", "restaurant"]) {
+  mealPlan: MealPlan!
+  restaurant: Restaurant!
+  addedAt: Timestamp!
+  notes: String
+  visitedDate: Date
+}
